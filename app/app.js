@@ -1,13 +1,12 @@
 import React from '../react/index.js';
 
-let hasRun = false;
-
 React.registerApp(() => {
     const [user, setUser] = React.useState('Levi');
     const [app, setApp] = React.useState('Todo');
+    const hasRun = React.useRef(false);
 
-    if (!hasRun) {
-        hasRun = true;
+    if (!hasRun.current) {
+        hasRun.current = true;
         setTimeout(() => {
             setUser('Joe');
             setApp('Node');

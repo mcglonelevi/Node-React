@@ -1,4 +1,5 @@
 import { useState, resetStateCursor } from './useState.js';
+import { useRef, resetRefCursor } from './useRef.js';
 
 class React {
     static APP = null;
@@ -17,12 +18,17 @@ class React {
         React.RENDER_TIMEOUT_REFERENCE = setTimeout(() => {
             React.RENDER_TIMEOUT_REFERENCE = null;
             resetStateCursor();
+            resetRefCursor();
             console.log(React.APP());
         }, 0);
     }
 
     static useState(initialValue) {
         return useState(initialValue);
+    }
+
+    static useRef(initialValue) {
+        return useRef(initialValue);
     }
 }
 
