@@ -1,3 +1,5 @@
+import { useState, resetStateCursor } from './useState.js';
+
 class React {
     static APP = null;
 
@@ -7,7 +9,12 @@ class React {
     }
 
     static render() {
+        resetStateCursor();
         console.log(React.APP());
+    }
+
+    static useState(initialValue) {
+        return useState(initialValue);
     }
 }
 
