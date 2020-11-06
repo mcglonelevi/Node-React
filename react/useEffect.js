@@ -1,23 +1,42 @@
 let EFFECT_CURSOR = 0;
 let EFFECT_MAP = {};
+let cleanupQueue = [];
 
 export function useEffect(callback, dependencies) {
     const effectId = EFFECT_CURSOR;
 
     EFFECT_CURSOR++;
 
-    const oldDependencies = EFFECT_MAP[effectId];
+    const lastRun = EFFECT_MAP[effectId];
+
+    let cleanupFunction = null;
 
     // this handles undefined case and first run
-    if (!oldDependencies) {
-        EFFECT_MAP[effectId] = dependencies;
-        callback();
+    if (!lastRun || !dependencies) {
+        if (lastRun && lastRun.cleanupFunction) {
+            lastRun.cleanupFunction();
+        }
+
+        EFFECT_MAP[effectId] = {
+            dependencies,
+            cleanupFunction: callback(),
+        };
     } else {
         // this handles subsequent runs
-        if (shouldRun(oldDependencies, dependencies)) {
-            EFFECT_MAP[effectId] = dependencies;
-            callback();
+        if (shouldRun(lastRun.dependencies, dependencies)) {
+            if (lastRun.cleanupFunction) {
+                lastRun.cleanupFunction();
+            }
+
+            EFFECT_MAP[effectId] = {
+                dependencies,
+                cleanupFunction: callback(),
+            };
         }
+    }
+
+    if (cleanupFunction) {
+        cleanupQueue.push();
     }
 }
 

@@ -14,10 +14,12 @@ React.registerApp(() => {
 
             React.useEffect(() => {
                 console.log('EVERY RENDER!!!');
+                return () => { console.log('CLEAN UP EVERY RENDER'); };
             });
 
             React.useEffect(() => {
                 console.log(`APP CHANGED: ${app}`);
+                return () => { console.log('CLEAN UP APP CHANGE'); };
             }, [app]);
 
             if (!hasRun.current) {
