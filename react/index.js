@@ -1,5 +1,6 @@
 import { useState, resetStateCursor } from './useState.js';
 import { useRef, resetRefCursor } from './useRef.js';
+import { createContext, useContext } from './useContext.js';
 
 class React {
     static APP = null;
@@ -21,6 +22,14 @@ class React {
             resetRefCursor();
             console.log(React.APP());
         }, 0);
+    }
+
+    static createContext() {
+        return createContext();
+    }
+
+    static useContext(context) {
+        return useContext(context);
     }
 
     static useState(initialValue) {
