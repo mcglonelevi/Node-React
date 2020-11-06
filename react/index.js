@@ -1,6 +1,7 @@
 import { useState, resetStateCursor } from './useState.js';
 import { useRef, resetRefCursor } from './useRef.js';
 import { createContext, useContext } from './useContext.js';
+import { useEffect, resetEffectCursor } from './useEffect.js';
 
 class React {
     static APP = null;
@@ -18,6 +19,7 @@ class React {
 
         React.RENDER_TIMEOUT_REFERENCE = setTimeout(() => {
             React.RENDER_TIMEOUT_REFERENCE = null;
+            resetEffectCursor();
             resetStateCursor();
             resetRefCursor();
             console.log(React.APP());
@@ -38,6 +40,10 @@ class React {
 
     static useRef(initialValue) {
         return useRef(initialValue);
+    }
+
+    static useEffect(callback, dependencies = null) {
+        return useEffect(callback, dependencies);
     }
 }
 

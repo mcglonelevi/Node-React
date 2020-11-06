@@ -8,12 +8,25 @@ React.registerApp(() => {
             const [app, setApp] = React.useState('Todo');
             const hasRun = React.useRef(false);
 
+            React.useEffect(() => {
+                console.log('ON MOUNT');
+            }, []);
+
+            React.useEffect(() => {
+                console.log('EVERY RENDER!!!');
+            });
+
+            React.useEffect(() => {
+                console.log(`APP CHANGED: ${app}`);
+            }, [app]);
+
             if (!hasRun.current) {
                 hasRun.current = true;
                 setTimeout(() => {
                     setUser('Joe');
-                    setApp('Node');
                 }, 1000);
+
+                setTimeout(() => { setApp('Console'); }, 2000)
             }
 
             return `${user}'s cool ${app} app works!`;
